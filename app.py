@@ -9,8 +9,7 @@ from streamlit_folium import st_folium
 
 import database
 import matching
-from data import AREA_COORDS, DUMMY_NEEDS, DUMMY_VOLUNTEERS, get_area_coord
-
+from data import AREA_COORDS, DUMMY_NEEDS, DUMMY_VOLUNTEERS, get_area_coord``
 # ---------- App bootstrap ----------
 st.set_page_config(page_title="Volunteer-Need Matching", page_icon="🚨", layout="wide")
 database.init_db()

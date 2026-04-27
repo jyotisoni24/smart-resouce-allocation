@@ -14,7 +14,7 @@ import matching
 from data import AREA_COORDS, DUMMY_NEEDS, DUMMY_VOLUNTEERS, get_area_coord
 
 st.set_page_config(
-    page_title="Sahayata | Mission Control",
+    page_title="Relief Mission Control",
     page_icon="🚨",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -69,8 +69,10 @@ def inject_styles() -> None:
 
         .block-container {
             max-width: 1220px;
-            padding-top: 1.6rem;
-            padding-bottom: 2.5rem;
+            padding-top: 2.25rem;
+            padding-bottom: 3.25rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
 
         h1, h2, h3 {
@@ -79,15 +81,22 @@ def inject_styles() -> None:
         }
 
         [data-testid="stTabs"] {
-            margin-top: 1rem;
+            margin-top: 1.4rem;
+            margin-bottom: 1.35rem;
         }
 
         [data-testid="stTabs"] button[role="tab"] {
             border-radius: 999px;
-            padding: 0.6rem 1rem;
+            padding: 0.72rem 1.1rem;
             margin-right: 0.45rem;
             border: 1px solid rgba(31, 157, 116, 0.16);
             background: rgba(255, 255, 255, 0.72);
+        }
+
+        [data-testid="stTabs"] [data-baseweb="tab-list"] {
+            gap: 0.7rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 1px solid rgba(18, 32, 25, 0.1);
         }
 
         [data-testid="stTabs"] button[aria-selected="true"] {
@@ -105,12 +114,12 @@ def inject_styles() -> None:
         .hero-shell {
             background: linear-gradient(135deg, #0f8d68 0%, #21a675 55%, #9fd4ab 120%);
             border-radius: 32px;
-            padding: 1.5rem;
+            padding: 1.8rem 1.8rem 1.65rem 1.8rem;
             color: white;
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
-            margin-bottom: 1rem;
+            margin: 0.75rem 0 1.75rem 0;
         }
 
         .hero-shell::after {
@@ -130,31 +139,33 @@ def inject_styles() -> None:
             padding: 0.38rem 0.7rem;
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.16);
-            font-size: 0.86rem;
+            font-size: 0.8rem;
             font-weight: 600;
         }
 
         .hero-title {
-            font-size: clamp(2rem, 4vw, 3.35rem);
-            line-height: 1.02;
-            margin: 0.85rem 0 0.35rem 0;
-            max-width: 12ch;
+            font-size: clamp(2rem, 3.4vw, 2.9rem);
+            line-height: 1.08;
+            margin: 0.9rem 0 0.55rem 0;
+            max-width: 16ch;
         }
 
         .hero-copy {
-            max-width: 56ch;
+            max-width: 62ch;
             color: rgba(255, 255, 255, 0.88);
             margin-bottom: 0;
-            font-size: 1rem;
+            font-size: 0.98rem;
+            line-height: 1.65;
         }
 
         .app-card {
             background: var(--card);
             border: 1px solid var(--card-border);
             border-radius: var(--radius);
-            padding: 1.15rem;
+            padding: 1.45rem;
             box-shadow: var(--shadow);
             backdrop-filter: blur(12px);
+            margin-bottom: 1.5rem;
         }
 
         .section-label {
@@ -163,7 +174,7 @@ def inject_styles() -> None:
             letter-spacing: 0.12em;
             color: var(--brand-dark);
             font-weight: 700;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.5rem;
         }
 
         .section-title {
@@ -174,17 +185,19 @@ def inject_styles() -> None:
 
         .section-copy {
             color: var(--muted);
-            margin: 0.35rem 0 0 0;
+            margin: 0.55rem 0 0 0;
             font-size: 0.95rem;
+            line-height: 1.65;
         }
 
         .stat-card {
             background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(239,247,242,0.95) 100%);
             border: 1px solid rgba(19, 83, 61, 0.08);
             border-radius: 20px;
-            padding: 1rem;
+            padding: 1.15rem;
             min-height: 120px;
             box-shadow: 0 14px 32px rgba(22, 44, 31, 0.06);
+            margin-bottom: 1.4rem;
         }
 
         .stat-value {
@@ -205,9 +218,9 @@ def inject_styles() -> None:
             border: 1px solid rgba(18, 32, 25, 0.08);
             border-radius: 18px;
             background: rgba(255, 255, 255, 0.92);
-            padding: 0.95rem 1rem;
+            padding: 1.1rem 1.1rem 1rem 1.1rem;
             box-shadow: 0 12px 26px rgba(15, 23, 42, 0.04);
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .need-topline {
@@ -251,8 +264,8 @@ def inject_styles() -> None:
         .timeline-strip {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.9rem;
+            gap: 0.7rem;
+            margin-top: 1.1rem;
         }
 
         .timeline-pill {
@@ -262,6 +275,11 @@ def inject_styles() -> None:
             color: #215543;
             font-size: 0.86rem;
             font-weight: 600;
+        }
+
+        .stButton,
+        .stForm {
+            margin-bottom: 1.2rem;
         }
 
         .stButton > button,
@@ -305,10 +323,18 @@ def inject_styles() -> None:
             box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
         }
 
+        div[data-testid="stDataFrame"] {
+            margin-top: 0.7rem;
+        }
+
+        .element-container {
+            margin-bottom: 0.35rem;
+        }
+
         .footer-note {
             color: var(--muted);
             text-align: center;
-            margin-top: 1.25rem;
+            margin-top: 2rem;
             font-size: 0.9rem;
         }
 
@@ -316,16 +342,19 @@ def inject_styles() -> None:
             .block-container {
                 padding-left: 1rem;
                 padding-right: 1rem;
+                padding-top: 1.4rem;
+                padding-bottom: 2.4rem;
             }
 
             .hero-shell {
-                padding: 1.25rem;
+                padding: 1.3rem;
                 border-radius: 26px;
             }
 
             .app-card,
             .stat-card {
                 padding: 1rem;
+                margin-bottom: 1rem;
             }
         }
         </style>
@@ -499,11 +528,11 @@ if st.button("Simulate Flood Crisis", type="primary", use_container_width=True):
 st.markdown(
     """
     <div class="hero-shell">
-        <div class="hero-kicker">Sahayata / Relief operations</div>
+        <div class="hero-kicker">Relief operations dashboard</div>
         <h1 class="hero-title">Faster reporting, clearer coordination, calmer response.</h1>
         <p class="hero-copy">
-            A more polished disaster relief interface for registering volunteers, submitting
-            urgent needs, and tracking field assignments across Delhi.
+            A cleaner disaster response interface for registering volunteers, submitting
+            urgent needs, and tracking field assignments without the cramped layout.
         </p>
         <div class="timeline-strip">
             <span class="timeline-pill">Mobile-first card layout</span>

@@ -14,7 +14,7 @@ import matching
 from data import AREA_COORDS, DUMMY_NEEDS, DUMMY_VOLUNTEERS, get_area_coord
 
 st.set_page_config(
-    page_title="Relief Mission Control",
+    page_title="Smart Resource allocation",
     page_icon="🚨",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -534,11 +534,6 @@ st.markdown(
             A cleaner disaster response interface for registering volunteers, submitting
             urgent needs, and tracking field assignments without the cramped layout.
         </p>
-        <div class="timeline-strip">
-            <span class="timeline-pill">Mobile-first card layout</span>
-            <span class="timeline-pill">Responsive dashboard sections</span>
-            <span class="timeline-pill">Cleaner mission-control view</span>
-        </div>
     </div>
     """,
     unsafe_allow_html=True,

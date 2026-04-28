@@ -282,6 +282,11 @@ def inject_styles() -> None:
             margin-bottom: 1.2rem;
         }
 
+        .top-action {
+            margin-top: 1.1rem;
+            margin-bottom: 1.35rem;
+        }
+
         .stButton > button,
         .stFormSubmitButton > button {
             border-radius: 14px;
@@ -516,6 +521,7 @@ def render_map(needs: list[dict], volunteers: list[dict], assignments: list[dict
 
 inject_styles()
 
+st.markdown('<div class="top-action">', unsafe_allow_html=True)
 if st.button("Simulate Flood Crisis", type="primary", use_container_width=True):
     database.clear_needs_and_assignments()
     database.seed_dummy_volunteers(DUMMY_VOLUNTEERS)
@@ -524,6 +530,7 @@ if st.button("Simulate Flood Crisis", type="primary", use_container_width=True):
     st.success(
         f"Loaded 15 dummy Delhi flood needs and created {created} assignment(s)."
     )
+st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown(
     """
@@ -555,7 +562,7 @@ with tab_register:
         section_intro(
             "Volunteer onboarding",
             "Register people who can help right now.",
-            "The form is cleaner, touch-friendly, and easier to use on smaller screens while keeping the same data flow.",
+            "Add volunteers with their skills, area, and availability so the matching flow can respond faster.",
         )
     with stats_col:
         stat_a, stat_b = st.columns(2, gap="small")
@@ -625,8 +632,8 @@ with tab_report:
     with top_left:
         section_intro(
             "Community needs",
-            "Submit a need in a layout that feels closer to a real mobile app.",
-            "This section uses better spacing, clearer labels, and stronger urgency cues inspired by your reference screen.",
+            "Track and manage requests coming from the community.",
+            "Capture new need reports with clear urgency, location, and people-affected details.",
         )
     with top_right:
         quick_1, quick_2 = st.columns(2, gap="small")
@@ -685,7 +692,7 @@ with tab_mission:
     section_intro(
         "Mission control",
         "Prioritize incidents, run matching, and review active assignments.",
-        "The dashboard is organized into scan-friendly cards so coordinators can act faster on desktop and mobile widths.",
+        "Use the dashboard to monitor queue pressure, generate assignments, and update task progress.",
     )
 
     action_left, action_right = st.columns(2, gap="small")
@@ -765,7 +772,7 @@ with tab_impact:
     section_intro(
         "Impact and coverage",
         "See what has moved from request to response.",
-        "This page keeps the map and operational metrics together so the outcome of the matching flow is easier to understand at a glance.",
+        "Review the map, coverage, and assignment outcomes in one place.",
     )
 
     impact_1, impact_2, impact_3, impact_4 = st.columns(4, gap="small")

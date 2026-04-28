@@ -381,6 +381,21 @@ def section_intro(label: str, title: str, copy: str) -> None:
     )
 
 
+def section_heading(title: str, copy: str | None = None) -> None:
+    description = (
+        f'<p class="section-copy">{html.escape(copy)}</p>' if copy else ""
+    )
+    st.markdown(
+        f"""
+        <div class="app-card">
+            <h3 class="section-title">{html.escape(title)}</h3>
+            {description}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_stat_card(label: str, value: int, tone: str = "brand") -> None:
     color = {
         "danger": "#d92d20",
@@ -576,8 +591,10 @@ with tab_register:
 
     form_col, list_col = st.columns([1.05, 0.95], gap="large")
     with form_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Volunteer details")
+        section_heading(
+            "Volunteer details",
+            "Enter volunteer information to add them to the available response pool.",
+        )
         with st.form("volunteer_form", clear_on_submit=True):
             name = st.text_input("Full name", placeholder="Aman Verma")
             phone = st.text_input("Phone", placeholder="9810010001")
@@ -603,11 +620,12 @@ with tab_register:
                         st.success(msg)
                     else:
                         st.error(msg)
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with list_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Recently registered")
+        section_heading(
+            "Recently registered",
+            "A quick snapshot of the latest volunteers added to the system.",
+        )
         if volunteers:
             volunteer_rows = [
                 {
@@ -625,7 +643,6 @@ with tab_register:
             )
         else:
             st.info("No volunteers registered yet.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
 with tab_report:
     top_left, top_right = st.columns([1.1, 0.9], gap="large")
@@ -646,8 +663,10 @@ with tab_report:
 
     report_col, queue_col = st.columns([1.02, 0.98], gap="large")
     with report_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Need intake")
+        section_heading(
+            "Need intake",
+            "Log a new community request with the essential details for prioritization.",
+        )
         with st.form("need_form", clear_on_submit=True):
             category = st.selectbox("Category", NEED_CATEGORIES)
             area = st.selectbox("Location", AREA_OPTIONS, key="need_area")
@@ -676,17 +695,17 @@ with tab_report:
                         people_affected=int(people_affected),
                     )
                     st.success("Need submitted.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with queue_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Pending needs")
+        section_heading(
+            "Pending needs",
+            "Recent requests appear here once they are submitted or loaded from the simulator.",
+        )
         if needs:
             for need in needs[:6]:
                 render_need_card(need, assignment_by_need.get(need["id"]))
         else:
             st.info("No needs submitted yet.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
 with tab_mission:
     section_intro(
@@ -718,31 +737,35 @@ with tab_mission:
 
     queue_col, assign_col = st.columns([1.05, 0.95], gap="large")
     with queue_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Priority queue")
+        section_heading(
+            "Priority queue",
+            "Needs are sorted by urgency so coordinators can scan what matters first.",
+        )
         if needs:
             for need in needs[:8]:
                 render_need_card(need, assignment_by_need.get(need["id"]))
         else:
             st.info("No needs available.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with assign_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Active assignments")
+        section_heading(
+            "Active assignments",
+            "Matched volunteer-task pairs appear here with current status and score.",
+        )
         if assignments:
             for assignment in assignments[:6]:
                 render_assignment_card(assignment)
         else:
             st.info("No assignments yet. Run the matching engine.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
     open_assigned_needs = [
         assignment for assignment in assignments if assignment["need_status"] == "Assigned"
     ]
     if open_assigned_needs:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Mark field task completed")
+        section_heading(
+            "Mark field task completed",
+            "Update a task once the volunteer has resolved the assigned need.",
+        )
         complete_options = {
             (
                 f'Need #{assignment["need_id"]} / {assignment["need_category"]} / '
@@ -759,7 +782,6 @@ with tab_mission:
             database.mark_need_completed(complete_options[selected_label])
             st.success("Task marked as completed.")
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
 
 with tab_impact:
     deployed_count = len({assignment["volunteer_id"] for assignment in assignments})
@@ -787,14 +809,17 @@ with tab_impact:
 
     map_col, table_col = st.columns([1.2, 0.8], gap="large")
     with map_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Relief map")
+        section_heading(
+            "Relief map",
+            "A live view of needs, volunteers, and assignment connections across the city.",
+        )
         render_map(needs, volunteers, assignments)
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with table_col:
-        st.markdown('<div class="app-card">', unsafe_allow_html=True)
-        st.markdown("### Assignment summary")
+        section_heading(
+            "Assignment summary",
+            "A compact table view of matched work and response status.",
+        )
         if assignments:
             assignment_rows = [
                 {
@@ -813,7 +838,6 @@ with tab_impact:
             )
         else:
             st.info("Assignments will appear here after matching.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown(
     '<p class="footer-note">Run locally with <code>streamlit run app.py</code></p>',
